@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptWriter Pro - Teste</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .home-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .home-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .auth-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            display: none;
+        }
+
+        .notification.success {
+            background: #48bb78;
+        }
+
+        .notification.error {
+            background: #f56565;
+        }
+    </style>
+</head>
+<body>
+    <!-- Página Inicial -->
+    <div id="home-page" class="home-container">
+        <div class="home-header">
+            <h1>🎬 ScriptWriter Pro</h1>
+            <p>Crie roteiros de cinema profissionais com salvamento online e exportação em PDF.</p>
+            <br>
+            <button class="btn btn-primary" onclick="showLogin()">Entrar</button>
+            <button class="btn btn-secondary" onclick="showSignup()">Cadastrar</button>
+        </div>
+    </div>
+
+    <!-- Página de Login -->
+    <div id="auth-page" class="auth-container hidden">
+        <div class="auth-form">
+            <div id="login-form">
+                <h2>🔑 Entrar</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">E-mail:</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Senha:</label>
+                        <input type="password" id="login-password" required minlength="8">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+                </form>
+                <br>
+                <p><a href="#" onclick="showHome()">← Voltar ao início</a></p>
+            </div>
+
+            <div id="signup-form" class="hidden">
+                <h2>👤 Cadastrar</h2>
+                <form onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signup-name">Nome:</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">E-mail:</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Senha:</label>
+                        <input type="password" id="signup-password" required minlength="8">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Cadastrar</button>
+                </form>
+                <br>
+                <p><a href="#" onclick="showHome()">← Voltar ao início</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Simples -->
+    <div id="editor-page" class="hidden" style="height: 100vh; background: white; padding: 20px;">
+        <h1>✅ Editor Funcionando!</h1>
+        <p>Se você chegou até aqui, o JavaScript está funcionando corretamente.</p>
+        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        console.log('🚀 Script carregado!');
+
+        // Funções de navegação
+        function showHome() {
+            console.log('📱 Mostrando página inicial');
+            document.getElementById('home-page').classList.remove('hidden');
+            document.getElementById('auth-page').classList.add('hidden');
+            document.getElementById('editor-page').classList.add('hidden');
+        }
+
+        function showLogin() {
+            console.log('🔑 Mostrando login');
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('auth-page').classList.remove('hidden');
+            document.getElementById('editor-page').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('signup-form').classList.add('hidden');
+        }
+
+        function showSignup() {
+            console.log('👤 Mostrando cadastro');
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('auth-page').classList.remove('hidden');
+            document.getElementById('editor-page').classList.add('hidden');
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+        }
+
+        function showEditor() {
+            console.log('✏️ Mostrando editor');
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('auth-page').classList.add('hidden');
+            document.getElementById('editor-page').classList.remove('hidden');
+        }
+
+        // Autenticação
+        function handleLogin(event) {
+            event.preventDefault();
+            console.log('🔓 Tentando fazer login...');
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (email && password.length >= 8) {
+                showNotification('Login realizado com sucesso!', 'success');
+                setTimeout(() => showEditor(), 1000);
+            } else {
+                showNotification('Preencha todos os campos!', 'error');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            console.log('📝 Tentando fazer cadastro...');
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (name && email && password.length >= 8) {
+                showNotification('Cadastro realizado com sucesso!', 'success');
+                setTimeout(() => showEditor(), 1000);
+            } else {
+                showNotification('Preencha todos os campos!', 'error');
+            }
+        }
+
+        function logout() {
+            console.log('👋 Fazendo logout');
+            showNotification('Logout realizado!', 'success');
+            setTimeout(() => showHome(), 1000);
+        }
+
+        // Sistema de notificações
+        function showNotification(message, type = 'success') {
+            console.log('🔔 Notificação:', message);
+            
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ DOM carregado, inicializando aplicação...');
+            showHome();
+        });
+
+        console.log('🎯 Todas as funções carregadas!');
+    </script>
+</body>
+</html>
