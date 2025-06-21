@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptWriter Pro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<!-- Editor principal -->
+    <div id="editor-page" class="app-container">
+        <!-- Sidebar esquerda -->
+        <div class="left-sidebar">
+            <div class="sidebar-icon active" title="Editor" onclick="showEditorTab()">📝</div>
+            <div class="sidebar-icon" title="Formatação" onclick="showFormatTab()">🎨</div>
+            <div class="sidebar-icon" title="Navegação" onclick="showNavTab()">🧭</div>
+            <div class="sidebar-icon" title="Configurações" onclick="showSettingsTab()">⚙️</div>
+            <div style="flex: 1;"></div>
+            <div class="sidebar-icon" title="Logout" onclick="logout()" style="background: #dc3545;">🚪</div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="main-content">
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" onclick="newScript()">📄 Novo</button>
+                    <button class="toolbar-btn" onclick="saveScript()">💾 Salvar</button>
+                    <button class="toolbar-btn" onclick="exportPDF()">📤 Exportar</button>
+                </div>
+                
+                <div class="toolbar-separator"></div>
+                
+                <div class="toolbar-group">
+                    <span id="format-indicator" style="font-size: 11px; color: #667eea; font-weight: bold;">
+                        Modo: AÇÃO
+                    </span>
+                    <button class="toolbar-btn format-btn" onclick="formatText('scene')" title="Cabeçalho de Cena">CENA</button>
+                    <button class="toolbar-btn format-btn" onclick="formatText('character')" title="Personagem">PERS</button>
+                    <button class="toolbar-btn format-btn" onclick="formatText('dialogue')" title="Diálogo">DIÁL</button>
+                    <button class="toolbar-btn format-btn" onclick="formatText('action')" title="Ação">AÇÃO</button>
+                    <button class="toolbar-btn format-btn" onclick="formatText('parenthetical')" title="Parênteses">( )</button>
+                    <button class="toolbar-btn format-btn" onclick="formatText('transition')" title="Transição">TRANS</button>
+                </div>
+
+                <div class="document-title">
+                    <input type="text" id="script-title" value="Novo Roteiro" 
+                           style="border: none; background: none; text-align: center; font-weight: 600; width: 200px;">
+                </div>
+
+                <div class="toolbar-group">
+                    <span style="font-size: 12px; color: #6c757d;">Página 1 de 1</span>
+                </div>
+            </div>
+
+            <!-- Editor -->
+            <div class="editor-container">
+                <div class="paper">
+                    <textarea id="screenplay-editor" class="screenplay-editor" 
+                        placeholder="INT. CASA DA MÃE JOANA - NOITE
+
+Mãe Joana está assistindo uma novela enquanto toma o seu chá. A televisão está ligada no jornal onde passa uma catástrofe.
+
+                    JOANA
+          Meu Deus! Misericórdia!
+
+                    HANNA
+          O que está acontecendo? Ouvi dizer 
+          que ouve um problema no centro de 
+          Londres!
+
+                              CUT TO:
+
+EXT. LONDRES - NOITE
+
+(Comece escrevendo aqui seu próprio roteiro...)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel direito -->
+        <div class="right-panel">
+            <!-- Formatação -->
+            <div class="panel-section">
+                <div class="panel-title">Formatação</div>
+                <ul class="format-list">
+                    <li class="format-item active" onclick="formatText('scene')">🎬 Cabeçalho</li>
+                    <li class="format-item" onclick="formatText('action')">📝 Ação</li>
+                    <li class="format-item" onclick="formatText('character')">👤 Personagem</li>
+                    <li class="format-item" onclick="formatText('dialogue')">💬 Diálogo</li>
+                    <li class="format-item" onclick="formatText('parenthetical')">📝 Parênteses</li>
+                    <li class="format-item" onclick="formatText('transition')">🔄 Transição</li>
+                </ul>
+            </div>
+
+            <!-- Navegação de personagens -->
+            <div class="panel-section">
+                <div class="panel-title">Personagens</div>
+                <div id="characters-list">
+                    <div class="script-item">
+                        <div class="script-title">JOANA</div>
+                        <div class="script-date">3 falas</div>
+                    </div>
+                    <div class="script-item">
+                        <div class="script-title">HANNA</div>
+                        <div class="script-date">1 fala</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scripts salvos -->
+            <div class="panel-section">
+                <div class="panel-title">Roteiros Salvos</div>
+                <div id="scripts-list">
+                    <!-- Scripts aparecerão aqui -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Status bar -->
+        <div class="bottom-status">
+            <span id="word-count">Palavras: 0</span>
+            <span id="char-count">Caracteres: 0</span>
+            <span id="current-user">Usuário logado</span>
+        </div>
+    </div>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
