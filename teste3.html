@@ -214,19 +214,25 @@
             resize: none;
             padding: 20px;
             background: white;
+            /* CORREÇÃO: Garantir que pode ser editado */
+            user-select: text;
+            -webkit-user-select: text;
         }
 
-        /* Sidebar */
+        /* Sidebar - CORREÇÃO: Mover para a direita */
         .sidebar {
             position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            right: 20px;
+            top: 120px;
             background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            min-width: 200px;
+            min-width: 180px;
+            max-width: 250px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
         }
 
         .sidebar h4 {
@@ -262,11 +268,11 @@
         @media (max-width: 768px) {
             .sidebar {
                 position: relative;
-                left: auto;
+                right: auto;
                 top: auto;
-                transform: none;
                 margin: 10px;
                 width: calc(100% - 20px);
+                max-height: 150px;
             }
             
             .toolbar {
@@ -276,6 +282,14 @@
             
             .format-btn {
                 width: 100%;
+            }
+            
+            .editor-area {
+                padding: 10px;
+            }
+            
+            .screenplay-text {
+                padding: 10px;
             }
         }
     </style>
@@ -377,11 +391,15 @@
         <!-- Área do Editor -->
         <div class="editor-area">
             <textarea id="screenplay-text" class="screenplay-text" 
-                placeholder="Bem-vindo ao ScriptWriter Pro!
+                placeholder="Clique aqui e comece a escrever seu roteiro...
 
-Comece escrevendo seu roteiro aqui...
+DICAS DE USO:
+1. Digite seu texto normalmente
+2. Selecione o texto que quer formatar  
+3. Clique no botão correspondente na toolbar acima
+4. Salve regularmente com o botão 💾 Salvar
 
-Exemplo de formatação:
+EXEMPLO DE ROTEIRO:
 
 INT. CASA - DIA
 
@@ -399,11 +417,7 @@ João caminha em direção à cozinha.
 
                               CORTE PARA:
 
-Dicas:
-1. Digite o texto
-2. Selecione o que quer formatar
-3. Clique no botão correspondente na toolbar
-4. Salve regularmente seu trabalho"></textarea>
+Agora apague este texto e comece a escrever!"></textarea>
         </div>
 
         <!-- Sidebar com Scripts Salvos -->
